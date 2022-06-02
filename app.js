@@ -17,13 +17,20 @@ containerDiv.addEventListener("click", (event) => {
     console.log("add todo button clicked");
     addLI();
   } else if (event.target.classList.contains("btn-danger")) {
-    console.log("clearrrrrrrrrrrrrr");
+    console.log(event.target.parentElement);
+
+    // clearAll();
   } else if (event.target.classList.contains("fa-remove")) {
     console.log("deleteeee");
+    event.target.parentElement.parentElement.remove();
   } else {
     console.log("other elemnts clicked");
   }
 });
+
+function deleteTodo() {
+  let todo;
+}
 
 function addLI() {
   const newElement = document.createElement("li");
@@ -36,30 +43,19 @@ function addLI() {
   newElement.appendChild(document.createTextNode(inputTodo.value));
   newElement.appendChild(link);
   todoList.appendChild(newElement);
-  console.log(todoList);
+  //   console.log(todoList);
   inputTodo.value = "";
 }
 
-// clearBtn.onclick = function () {
-//   // todoList.innerHTML = "";
-//   if (confirm("Tümünü silmek istediğinize emin misiniz ?")) {
-//     // Arayüzden todoları temizleme
-//     // todoList.innerHTML = ""; // Yavaş
-//     while (todoList.firstElementChild != null) {
-//       todoList.removeChild(todoList.firstElementChild);
-//     }
-//     localStorage.removeItem("todos");
-//   }
-// };
-
 function clearAll() {
-    let todosAll = document.querySelectorAll(".product-line-price")
+  let todosAll = document.querySelector(".allTodos");
   if (confirm("Tümünü silmek istediğinize emin misiniz ?")) {
     // Arayüzden todoları temizleme
-    // todoList.innerHTML = ""; // Yavaş
-    while (todoList.firstElementChild != null) {
-      todoList.removeChild(todoList.firstElementChild);
+    //   todosAll.innerHTML = ""; // Yavaş
+    while (todosAll.firstElementChild != null) {
+      todosAll.removeChild(todosAll.firstElementChild);
     }
-    localStorage.removeItem("todos");
+    // localStorage.removeItem("todos");
   }
 }
+
