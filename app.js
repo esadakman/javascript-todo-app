@@ -25,9 +25,9 @@ containerDiv.addEventListener("click", (e) => {
     e.preventDefault();
     // ! remove all todos
   } else if (e.target.classList.contains("btn-danger")) {
-    if (e.target.previousElementSibling.previousElementSibling > 0) {
+    let ul = e.target.previousElementSibling.previousElementSibling;
+    if (ul.childElementCount > 0) {
       if (confirm("Are you sure to delete all todos ?")) {
-        let ul = e.target.previousElementSibling.previousElementSibling;
         // ! ul'nin çocuğu bitene kadar while döngüsü çalışır
         while (ul.firstElementChild != null) {
           ul.removeChild(ul.firstElementChild);
