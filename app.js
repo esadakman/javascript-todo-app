@@ -25,11 +25,13 @@ containerDiv.addEventListener("click", (e) => {
     e.preventDefault();
     // ! remove all todos
   } else if (e.target.classList.contains("btn-danger")) {
-    let ul = e.target.previousElementSibling.previousElementSibling;
-    // ! ul'nin çocuğu bitene kadar while döngüsü çalışır
-    while (ul.firstElementChild != null) {
-      ul.removeChild(ul.firstElementChild);
-      localStorage.removeItem("todos");
+    if (confirm("Are you sure to delete all todos ?")) {
+      let ul = e.target.previousElementSibling.previousElementSibling;
+      // ! ul'nin çocuğu bitene kadar while döngüsü çalışır
+      while (ul.firstElementChild != null) {
+        ul.removeChild(ul.firstElementChild);
+        localStorage.removeItem("todos");
+      }
     }
     // ? ==================================
   } else if (e.target.classList.contains("fa-remove")) {
@@ -39,13 +41,12 @@ containerDiv.addEventListener("click", (e) => {
   } else if (e.target.classList.contains("btn-warning")) {
     search.value = "";
     const listItems = document.querySelectorAll(".form-group-item");
-    // const listItemss = document.querySelectorAll(".allTodos");
+
     listItems.forEach(function (listItem) {
       listItem.setAttribute("style", "display : block");
     });
     e.preventDefault();
   }
-  // else {    // console.log("other elemnets clicked");  }
 });
 
 // ! delete storage
@@ -58,7 +59,6 @@ function deleteTodoFromStorage(deletetodo) {
       todos.splice(index, 1); // Arrayden değeri silebiliriz.
     }
   });
-
   localStorage.setItem("todos", JSON.stringify(todos));
 }
 
@@ -99,7 +99,7 @@ function showAlert(type, message) {
   const alert = document.createElement("div");
   alert.className = `alert alert-${type}`;
   alert.textContent = message;
-  console.log(alert);
+  // console.log(alert);
   firstCardBody.append(alert);
   // * set timeout
   setTimeout(function () {
@@ -112,7 +112,7 @@ function showAlert(type, message) {
 function addLI(newTodo) {
   const newElement = document.createElement("li");
   const link = document.createElement("a");
-  // !============
+  // ! elementlere değer atama
   newElement.className = "form-group-item d-flex justify-content-between";
   link.href = "#";
   link.className = "delete-item";
