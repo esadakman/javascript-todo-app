@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -25,12 +25,12 @@
                 <div class="card-body">
                     <form id="todo-form" class="row " name="form">
 
-                        <div class="col-6 my-3">
-                            <input class="form-control" type="text" name="todo" id="todo"
+                        <div class="col-12 col-sm-6  my-3">
+                            <input class="form-control " type="text" name="todo" id="todo"
                                 placeholder="ADD TODO HERE ..." value="">
                         </div>
                         <div class="col-4 my-3">
-                            <button type="submit" id="addTodo" class="btn btn-primary  ">Add Todo</button>
+                            <button type="submit" id="addTodo" class="btn btn-primary addTodo">Add Todo</button>
                         </div>
 
                     </form>
@@ -41,25 +41,31 @@
                     <hr>
                     <h5 class="card-title" id="tasks-title">Your Todos</h5>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-sm-6">
                             <input class="form-control" type="text" name="filter" id="search" placeholder="Search Todo">
+                        </div>
+                        <div class="col-4 my-3">
+                            <button type="submit" id="addTodo" class="btn btn-dark addTodo">Add Todo</button>
                         </div>
                     </div>
                     <hr>
-                    <ul class="form-group">
+                    <ul class="form-group allTodos">
                         <!-- <li class="form-group-item d-flex justify-content-between">
                             Todo 1
                             <a href="#" class="delete-item">
-                                <i class="fa fa-remove pe-3"></i>
+                                <i class="fa fa-remove pe-3 delete-itemss"></i>
                             </a>
 
                         </li> -->
+
                     </ul>
                     <hr>
                     <a id="clear-todos" class="btn btn-danger" href="#">Clear All Todos</a>
                 </div>
             </div>
+
         </div>
+
 
     </div>
 
@@ -67,47 +73,3 @@
 </body>
 
 </html>
-
-
-
-<!-- function addTodo(e) {
-    const newTodo = inputTodo.value.trim();
-  
-    if (!newTodo) {
-      showAlert("danger","Lütfen bir todo girin...");
-    } else {
-  
-    }
-  }
-  
-  function addTodoUI(newTodo) {
-    const listItem = document.createElement("li");
-    // Link oluşturma
-    const link = document.createElement("a");
-    link.href = "#";
-    link.className = "delete-item";
-    link.innerHTML = "<i class = 'fa fa-remove'></i>";
-  
-    listItem.className = "list-group-item d-flex justify-content-between";
-  
-    // Text Node Ekleme
-  
-    listItem.appendChild(document.createTextNode(newTodo));
-    listItem.appendChild(link);
-  
-    // Todo List'e List Item'ı ekleme
-  
-    todoList.appendChild(listItem);
-    inputTodo.value = "";
-  } -->
-
-
-<!-- const listItem = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = "#";
-    link.className = "delete-item";
-    link.innerHTML = "<i class = 'fa fa-remove'></i>";
-    listItem.appendChild(document.createTextNode(newTodo));
-    listItem.appendChild(link);
-    todoList.appendChild(listItem);
-    console.log(listItem); -->
