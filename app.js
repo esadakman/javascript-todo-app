@@ -1,14 +1,13 @@
-// const form = document.querySelector("#todo-form");
-// const addBtn = document.getElementById("addTodo");
-// const clearBtn = document.querySelector("#clear-todos");
-// document.querySelector(".delete-item");
 const inputTodo = document.querySelector("#todo");
 const todoList = document.querySelectorAll(".form-group")[1];
 const search = document.querySelector("#search");
 const firstCardBody = document.querySelectorAll(".card-body")[0];
 const containerDiv = document.querySelector(".container");
 
-laodAllTodosToUI();
+window.addEventListener("load", () => {
+  laodAllTodosToUI();
+  search.addEventListener("keyup", filterTodos);
+});
 
 containerDiv.addEventListener("click", (e) => {
   // ! addtodo button event
@@ -24,19 +23,29 @@ containerDiv.addEventListener("click", (e) => {
     }
     // console.log("add todo button clicked");
     e.preventDefault();
+    // ! remove all todos
   } else if (e.target.classList.contains("btn-danger")) {
     let ul = e.target.previousElementSibling.previousElementSibling;
     // ! ul'nin çocuğu bitene kadar while döngüsü çalışır
     while (ul.firstElementChild != null) {
       ul.removeChild(ul.firstElementChild);
+      localStorage.removeItem("todos");
     }
+    // ? ==================================
   } else if (e.target.classList.contains("fa-remove")) {
-    console.log("deleteeee");
+    // console.log("deleteeee");
     e.target.parentElement.parentElement.remove();
     deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
-  } else {
-    console.log("other elemnts clicked");
+  } else if (e.target.classList.contains("btn-warning")) {
+    search.value = "";
+    const listItems = document.querySelectorAll(".form-group-item");
+    // const listItemss = document.querySelectorAll(".allTodos");
+    listItems.forEach(function (listItem) {
+      listItem.setAttribute("style", "display : block");
+    });
+    e.preventDefault();
   }
+  // else {    // console.log("other elemnets clicked");  }
 });
 
 // ! delete storage
@@ -104,7 +113,7 @@ function addLI(newTodo) {
   const newElement = document.createElement("li");
   const link = document.createElement("a");
   // !============
-  newElement.className = "list-group-item d-flex justify-content-between";
+  newElement.className = "form-group-item d-flex justify-content-between";
   link.href = "#";
   link.className = "delete-item";
   link.innerHTML = "<i class = 'fa fa-remove pe-3'></i>";
@@ -115,8 +124,6 @@ function addLI(newTodo) {
   //   console.log(todoList);
   inputTodo.value = "";
 }
-
-search.addEventListener("keyup", filterTodos);
 
 // ! filter todos
 function filterTodos(e) {
