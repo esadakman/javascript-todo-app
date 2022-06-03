@@ -13,24 +13,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 
-<body>
+<body class="bg-dark ">
 
     <div class="container d-flex ">
 
         <div class="w-100 mt-5">
             <div class="card row ">
-                <div class="card-header">
-                    <h1 class="text-center text-dark">TO-DO LIST</h1>
+                <div class="card-header bg-danger text-bg-dark ">
+                    <h1 class="text-center  mt-3 ">TODO LIST</h1>
                 </div>
                 <div class="card-body">
                     <form id="todo-form" class="row " name="form">
 
                         <div class="col-12 col-sm-6  my-3">
                             <input class="form-control " type="text" name="todo" id="todo"
-                                placeholder="Add to-do here ..." value="">
+                                placeholder="Add todo here ..." value="">
                         </div>
                         <div class="col-4 my-3">
-                            <button type="submit" id="addTodo" class="btn btn-primary addTodo">Add to-do </button>
+                            <button type="submit" id="addTodo" class="btn btn-primary addTodo">Add Todo </button>
                         </div>
 
                     </form>
@@ -44,7 +44,7 @@
 
                         <div class="form-group col-sm-6  my-3">
                             <input class="form-control " type="text" name="search" id="search"
-                                placeholder="Search to-do  ..." value="">
+                                placeholder="Search todo  ..." value="">
                         </div>
                         <div class="col-4 my-3">
                             <button type="submit" id="clear" class="btn btn-warning ">Clear</button>
@@ -64,7 +64,7 @@
 
                     </ul>
                     <hr>
-                    <a id="clear-todos" class="btn btn-danger" href="#">Clear All to-dos</a>
+                    <a id="clear-todos" class="btn btn-danger" href="#">Clear All Todos</a>
                 </div>
             </div>
 

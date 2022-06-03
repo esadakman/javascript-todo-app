@@ -25,13 +25,18 @@ containerDiv.addEventListener("click", (e) => {
     e.preventDefault();
     // ! remove all todos
   } else if (e.target.classList.contains("btn-danger")) {
-    if (confirm("Are you sure to delete all todos ?")) {
-      let ul = e.target.previousElementSibling.previousElementSibling;
-      // ! ul'nin çocuğu bitene kadar while döngüsü çalışır
-      while (ul.firstElementChild != null) {
-        ul.removeChild(ul.firstElementChild);
-        localStorage.removeItem("todos");
+    if (e.target.previousElementSibling.previousElementSibling > 0) {
+      if (confirm("Are you sure to delete all todos ?")) {
+        let ul = e.target.previousElementSibling.previousElementSibling;
+        // ! ul'nin çocuğu bitene kadar while döngüsü çalışır
+        while (ul.firstElementChild != null) {
+          ul.removeChild(ul.firstElementChild);
+          localStorage.removeItem("todos");
+        }
       }
+    } else {
+      // alert("No Todos left to delete");
+      showAlert("danger", "No Todos left to delete");
     }
     // ? ==================================
   } else if (e.target.classList.contains("fa-remove")) {
