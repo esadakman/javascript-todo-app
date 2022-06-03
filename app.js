@@ -1,36 +1,47 @@
 // const form = document.querySelector("#todo-form");
-const inputTodo = document.querySelector("#todo");
 // const addBtn = document.getElementById("addTodo");
-// const search = document.querySelector("#search");
-const todoList = document.querySelectorAll(".form-group")[1];
 // const clearBtn = document.querySelector("#clear-todos");
+// document.querySelector(".delete-item");
+const inputTodo = document.querySelector("#todo");
+const todoList = document.querySelectorAll(".form-group")[1];
+const search = document.querySelector("#search");
 
-// const firstCardBody = document.querySelectorAll(".card-body")[0];
-// const secondCardBody = document.querySelectorAll(".card-body")[1];
-// const items = document.querySelectorAll(".list-group li");
-document.querySelector(".delete-item");
-// let containerDiv = document.querySelector(".container");
+search.addEventListener("keyup", filterTodos);
+
+function filterTodos(e) {
+  const filterValue = e.target.value.toLowerCase();
+  const listItems = document.querySelectorAll(".form-group-item");
+
+  listItems.forEach(function (listItem) {
+    const text = listItem.textContent.toLowerCase();
+    if (text.indexOf(filterValue) === -1) {
+      listItem.setAttribute("style", "display : none !important");
+    } else {
+      listItem.setAttribute("style", "display : block");
+    }
+  });
+}
 
 const containerDiv = document.querySelector(".container");
-containerDiv.addEventListener("click", (event) => {
-  if (event.target.classList.contains("addTodo")) {
-    console.log("add todo button clicked");
+containerDiv.addEventListener("click", (e) => {
+  if (e.target.classList.contains("addTodo")) {
+    const newTodo = inputTodo.value.trim()
     addLI();
-  } else if (event.target.classList.contains("btn-danger")) {
-    console.log(event.target.parentElement);
-
-    // clearAll();
-  } else if (event.target.classList.contains("fa-remove")) {
+    // console.log("add todo button clicked");
+    e.preventDefault();
+  } else if (e.target.classList.contains("btn-danger")) {
+    let ul = e.target.previousElementSibling.previousElementSibling;
+    // ! ul'nin çocuğu bitene kadar while döngüsü çalışır
+    while (ul.firstElementChild != null) {
+      ul.removeChild(ul.firstElementChild);
+    }
+  } else if (e.target.classList.contains("fa-remove")) {
     console.log("deleteeee");
-    event.target.parentElement.parentElement.remove();
+    e.target.parentElement.parentElement.remove();
   } else {
     console.log("other elemnts clicked");
   }
 });
-
-function deleteTodo() {
-  let todo;
-}
 
 function addLI() {
   const newElement = document.createElement("li");
@@ -46,16 +57,3 @@ function addLI() {
   //   console.log(todoList);
   inputTodo.value = "";
 }
-
-function clearAll() {
-  let todosAll = document.querySelector(".allTodos");
-  if (confirm("Tümünü silmek istediğinize emin misiniz ?")) {
-    // Arayüzden todoları temizleme
-    //   todosAll.innerHTML = ""; // Yavaş
-    while (todosAll.firstElementChild != null) {
-      todosAll.removeChild(todosAll.firstElementChild);
-    }
-    // localStorage.removeItem("todos");
-  }
-}
-
