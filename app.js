@@ -3,7 +3,7 @@ const todoList = document.querySelectorAll(".form-group")[1];
 const search = document.querySelector("#search");
 const firstCardBody = document.querySelectorAll(".card-body")[0];
 const containerDiv = document.querySelector(".container");
-
+const checkboxx = document.querySelector(".form-check-input");
 window.addEventListener("load", () => {
   laodAllTodosToUI();
   search.addEventListener("keyup", filterTodos);
@@ -13,13 +13,14 @@ containerDiv.addEventListener("click", (e) => {
   // ! addtodo button event
   if (e.target.classList.contains("addTodo")) {
     const newTodo = inputTodo.value.trim();
+    // const newTodo = `<p>${inputTodo.value}</p>`;
     if (newTodo === "") {
       showAlert("danger", "Please enter a todo");
     } else {
       showAlert("success", "Your todo successfully added !");
 
       addTodoToStorage(newTodo);
-      addLI(newTodo);
+      addList(newTodo);
     }
     // console.log("add todo button clicked");
     e.preventDefault();
@@ -40,9 +41,17 @@ containerDiv.addEventListener("click", (e) => {
     }
     // ? ==================================
   } else if (e.target.classList.contains("fa-remove")) {
-    // console.log("deleteeee");
-    e.target.parentElement.parentElement.remove();
-    deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
+    console.log("deleteeee");
+    // if (
+    //   e.target.parentElement.parentElement.querySelector(".form-check-input")
+    //     .checked
+    // ) {
+    //   e.target.parentElement.parentElement.remove();
+    //   deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
+    // } else {
+    //   alert("Complete the todo");
+    // }
+    console.log(e.target.closest("input"));
   } else if (e.target.classList.contains("btn-warning")) {
     search.value = "";
     const listItems = document.querySelectorAll(".form-group-item");
@@ -51,6 +60,19 @@ containerDiv.addEventListener("click", (e) => {
       listItem.setAttribute("style", "display : block");
     });
     e.preventDefault();
+  } else if (e.target.classList.contains("checkbox")) {
+    // if (e.target.value === "false") {
+    //   e.target.value = "true";
+    //   e.target.parentElement.style = "text-decoration:line-through";
+    // } else {
+    //   e.target.value = "false";
+    //   e.target.parentElement.style = "text-decoration:none";
+    // }
+    if (e.target.parentElement.checked) {
+      e.target.parentElement.style = "text-decoration:none";
+    } else {
+      e.target.parentElement.style = "text-decoration:line-through";
+    }
   }
 });
 
@@ -73,7 +95,7 @@ function laodAllTodosToUI() {
   let todos = getTodosFromStorage();
 
   todos.forEach(function (todo) {
-    addLI(todo);
+    addList(todo);
   });
 }
 
@@ -93,6 +115,9 @@ function getTodosFromStorage() {
 function addTodoToStorage(newTodo) {
   let todos = getTodosFromStorage();
   todos.push(newTodo);
+  // !=================
+  // todos.push("check");
+  // !=================
 
   localStorage.setItem("todos", JSON.stringify(todos));
 }
@@ -113,19 +138,28 @@ function showAlert(type, message) {
 
 // ! element oluşturma
 
-function addLI(newTodo) {
+function addList(newTodo) {
   const newElement = document.createElement("li");
   const link = document.createElement("a");
+  const todoChecker = document.createElement("input");
   // ! elementlere değer atama
   newElement.className = "form-group-item d-flex justify-content-between";
+  // console.log(newElement);
   link.href = "#";
   link.className = "delete-item";
-  link.innerHTML = "<i class = 'fa fa-remove pe-3'></i>";
+  link.innerHTML = "<i class = 'fa fa-remove '></i>";
+
+  todoChecker.className = "checkbox form-check-input";
+  todoChecker.type = "checkbox";
+  todoChecker.value = "false";
+
+  console.log(newElement);
+  newElement.appendChild(todoChecker);
   newElement.appendChild(document.createTextNode(newTodo));
-  // newElement.appendChild(document.createTextNode(inputTodo.value));
+
   newElement.appendChild(link);
   todoList.appendChild(newElement);
-  //   console.log(todoList);
+  // console.log(todoList);
   inputTodo.value = "";
 }
 
@@ -143,3 +177,8 @@ function filterTodos(e) {
     }
   });
 }
+
+// todoChecker.href = "#";
+// let todoChecker = document.createElement("input");
+// todoChecker.className = "check-item";
+// todoChecker.innerHTML = "<i class = 'fa-solid fa-check '></i>";

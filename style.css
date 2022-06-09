@@ -11,8 +11,13 @@
     width: 60vw !important;
     height: 50vh;
     font-family: 'Rajdhani', sans-serif;
-    /* background-color: crimson; */
+    transition: all .3s linear;
+}
 
+@media screen and (max-width: 600px) {
+    .container {
+        width: 90vw !important;
+    }
 }
 
 #clear,
@@ -22,4 +27,39 @@
 
 .asd {
     height: 8rem;
+}
+
+.fa {
+    /* border: 2px red solid; */
+    color: red;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.fa-remove:hover {
+    transform: scale(1.3);
+    transition: all .3s linear;
+}
+
+/* .fa-check {
+    font-size: 1.5rem;
+}
+
+.fa-check:hover {
+    transform: scale(1.3);
+    transition: all .3s linear;
+    color: green;
+} */
+.form-group-item {
+    position: relative;
+}
+
+.form-check-input {
+    position: absolute;
+    left: -30px;
+    cursor: pointer;
+    transition: all .3s linear;
+    font-size: 1.3rem;
+    bottom: 13%;
+
 }
