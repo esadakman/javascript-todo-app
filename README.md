@@ -2,7 +2,8 @@
 
 [Click Me!](https://esadakman.github.io/todo_list_project/)
 
-![todo-list](https://user-images.githubusercontent.com/98649983/171985802-28ac3d56-d77f-482e-9c48-a9e422c37b95.gif)
+![todoo](https://user-images.githubusercontent.com/98649983/172943640-270c2e28-ddb9-485e-964e-f48f67b4afba.gif)
+
 
 
 
