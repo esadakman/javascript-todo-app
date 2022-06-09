@@ -12,17 +12,27 @@ window.addEventListener("load", () => {
 containerDiv.addEventListener("click", (e) => {
   // ! addtodo button event
   if (e.target.classList.contains("addTodo")) {
-    const newTodo = inputTodo.value.trim();
+    // const newTodo = inputTodo.value.trim();
+    let newTodo = inputTodo.value;
+
     // const newTodo = `<p>${inputTodo.value}</p>`;
     if (newTodo === "") {
       showAlert("danger", "Please enter a todo");
     } else {
       showAlert("success", "Your todo successfully added !");
-
-      addTodoToStorage(newTodo);
+      // addTodoToStorage(newTodo);
+      let status = [];
       addList(newTodo);
+      let duty = newTodo;
+      let idd = todoList.querySelector("li").id;
+      // let duty = "asd";
+      status.id = idd;
+      status.todo = duty;
+      console.log(status);
+      console.log(todoList.querySelector("li").textContent);
+      addTodoToStorage(status);
     }
-    // console.log("add todo button clicked");
+    // console.log(newTodo);
     e.preventDefault();
     // ! remove all todos
   } else if (e.target.classList.contains("btn-danger")) {
@@ -42,16 +52,12 @@ containerDiv.addEventListener("click", (e) => {
     // ? ==================================
   } else if (e.target.classList.contains("fa-remove")) {
     console.log("deleteeee");
-    // if (
-    //   e.target.parentElement.parentElement.querySelector(".form-check-input")
-    //     .checked
-    // ) {
-    //   e.target.parentElement.parentElement.remove();
-    //   deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
-    // } else {
-    //   alert("Complete the todo");
-    // }
-    console.log(e.target.closest("input"));
+    if (e.target.closest("li").querySelector(".form-check-input").checked) {
+      e.target.parentElement.parentElement.remove();
+      deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
+    } else {
+      showAlert("danger", "Please complete the todo");
+    }
   } else if (e.target.classList.contains("btn-warning")) {
     search.value = "";
     const listItems = document.querySelectorAll(".form-group-item");
@@ -61,17 +67,14 @@ containerDiv.addEventListener("click", (e) => {
     });
     e.preventDefault();
   } else if (e.target.classList.contains("checkbox")) {
-    // if (e.target.value === "false") {
-    //   e.target.value = "true";
-    //   e.target.parentElement.style = "text-decoration:line-through";
-    // } else {
-    //   e.target.value = "false";
-    //   e.target.parentElement.style = "text-decoration:none";
-    // }
-    if (e.target.parentElement.checked) {
-      e.target.parentElement.style = "text-decoration:none";
-    } else {
+    if (e.target.value === "false") {
+      e.target.value = "true";
       e.target.parentElement.style = "text-decoration:line-through";
+      let content = e.target.parentElement.textContent;
+      showAlert("success", `${content} completed`);
+    } else {
+      e.target.value = "false";
+      e.target.parentElement.style = "text-decoration:none";
     }
   }
 });
@@ -153,12 +156,14 @@ function addList(newTodo) {
   todoChecker.type = "checkbox";
   todoChecker.value = "false";
 
-  console.log(newElement);
+  // console.log(newElement);
   newElement.appendChild(todoChecker);
   newElement.appendChild(document.createTextNode(newTodo));
+  newElement.id = ID();
 
   newElement.appendChild(link);
   todoList.appendChild(newElement);
+  // console.log(todoList);
   // console.log(todoList);
   inputTodo.value = "";
 }
@@ -178,7 +183,9 @@ function filterTodos(e) {
   });
 }
 
-// todoChecker.href = "#";
-// let todoChecker = document.createElement("input");
-// todoChecker.className = "check-item";
-// todoChecker.innerHTML = "<i class = 'fa-solid fa-check '></i>";
+function ID() {
+  // Math.random should be unique because of its seeding algorithm.
+  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+  // after the decimal.
+  return "_" + Math.random().toString(36).substr(2, 9);
+}
