@@ -53,10 +53,11 @@ containerDiv.addEventListener("click", (e) => {
     }
     // ? ==================================
   } else if (e.target.classList.contains("fa-remove")) {
-    console.log("deleteeee");
     if (e.target.closest("li").querySelector(".form-check-input").checked) {
       e.target.parentElement.parentElement.remove();
       deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
+      let content = e.target.parentElement.parentElement.textContent;
+      showAlert("success", `${content} removed`);
     } else {
       showAlert("danger", "Please complete the todo");
     }
