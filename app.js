@@ -9,6 +9,8 @@ window.addEventListener("load", () => {
   search.addEventListener("keyup", filterTodos);
 });
 
+console.log(todoList.firstChild);
+
 containerDiv.addEventListener("click", (e) => {
   // ! addtodo button event
   if (e.target.classList.contains("addTodo")) {
@@ -21,16 +23,9 @@ containerDiv.addEventListener("click", (e) => {
     } else {
       showAlert("success", "Your todo successfully added !");
       // addTodoToStorage(newTodo);
-      let status = [];
       addList(newTodo);
-      let duty = newTodo;
-      let idd = todoList.querySelector("li").id;
-      // let duty = "asd";
-      status.id = idd;
-      status.todo = duty;
-      console.log(status);
-      console.log(todoList.querySelector("li").textContent);
-      addTodoToStorage(status);
+      console.log(object);
+      addTodoToStorage(newTodo);
     }
     // console.log(newTodo);
     e.preventDefault();
@@ -163,6 +158,7 @@ function addList(newTodo) {
 
   newElement.appendChild(link);
   todoList.appendChild(newElement);
+
   // console.log(todoList);
   // console.log(todoList);
   inputTodo.value = "";
@@ -184,8 +180,5 @@ function filterTodos(e) {
 }
 
 function ID() {
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
   return "_" + Math.random().toString(36).substr(2, 9);
 }
