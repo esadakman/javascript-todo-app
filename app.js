@@ -4,12 +4,22 @@ const search = document.querySelector("#search");
 const firstCardBody = document.querySelectorAll(".card-body")[0];
 const containerDiv = document.querySelector(".container");
 const checkboxx = document.querySelector(".form-check-input");
+
+var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+// for (var checkbox of checkboxes) {
+//   checkbox.checked = this.checked;
+// }
+// if (checkboxes.checked) {
+//   console.log("object");
+// } else {
+//   console.log("asdsadsa");
+// }
+// console.log(checkboxes);
+
 window.addEventListener("load", () => {
   laodAllTodosToUI();
   search.addEventListener("keyup", filterTodos);
 });
-
-console.log(todoList.firstChild);
 
 containerDiv.addEventListener("click", (e) => {
   // ! addtodo button event
@@ -22,12 +32,9 @@ containerDiv.addEventListener("click", (e) => {
       showAlert("danger", "Please enter a todo");
     } else {
       showAlert("success", "Your todo successfully added !");
-      // addTodoToStorage(newTodo);
       addList(newTodo);
-      console.log(object);
       addTodoToStorage(newTodo);
     }
-    // console.log(newTodo);
     e.preventDefault();
     // ! remove all todos
   } else if (e.target.classList.contains("btn-danger")) {
@@ -113,9 +120,6 @@ function getTodosFromStorage() {
 function addTodoToStorage(newTodo) {
   let todos = getTodosFromStorage();
   todos.push(newTodo);
-  // !=================
-  // todos.push("check");
-  // !=================
 
   localStorage.setItem("todos", JSON.stringify(todos));
 }
@@ -142,16 +146,16 @@ function addList(newTodo) {
   const todoChecker = document.createElement("input");
   // ! elementlere değer atama
   newElement.className = "form-group-item d-flex justify-content-between";
-  // console.log(newElement);
+  // ! link Attribute
   link.href = "#";
   link.className = "delete-item";
   link.innerHTML = "<i class = 'fa fa-remove '></i>";
-
+  // ! checkbox
   todoChecker.className = "checkbox form-check-input";
   todoChecker.type = "checkbox";
   todoChecker.value = "false";
+  // ! combining
 
-  // console.log(newElement);
   newElement.appendChild(todoChecker);
   newElement.appendChild(document.createTextNode(newTodo));
   newElement.id = ID();
@@ -159,8 +163,6 @@ function addList(newTodo) {
   newElement.appendChild(link);
   todoList.appendChild(newElement);
 
-  // console.log(todoList);
-  // console.log(todoList);
   inputTodo.value = "";
 }
 
@@ -179,6 +181,7 @@ function filterTodos(e) {
   });
 }
 
+//  ! id function
 function ID() {
   return "_" + Math.random().toString(36).substr(2, 9);
 }
