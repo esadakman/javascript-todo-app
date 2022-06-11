@@ -42,16 +42,24 @@
 
 .form-group-item {
     position: relative;
+    height: 1rem;
+    margin-bottom: 1rem;
 }
 
-.form-check-input {
+.fa-check {
     position: absolute;
     left: -30px;
     cursor: pointer;
     transition: all .3s linear;
     font-size: 1.3rem;
-    bottom: 13%;
+    /* bottom: %; */
+    color: red;
+}
 
+li.checked>p {
+    color: rgb(41, 41, 41);
+    text-decoration: line-through;
+    font-weight: normal;
 }
 
 

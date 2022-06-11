@@ -6,37 +6,78 @@ const containerDiv = document.querySelector(".container");
 const checkboxx = document.querySelector(".form-check-input");
 
 var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-// for (var checkbox of checkboxes) {
-//   checkbox.checked = this.checked;
-// }
-// if (checkboxes.checked) {
-//   console.log("object");
-// } else {
-//   console.log("asdsadsa");
-// }
-// console.log(checkboxes);
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
 window.addEventListener("load", () => {
   laodAllTodosToUI();
   search.addEventListener("keyup", filterTodos);
 });
 
+function laodAllTodosToUI() {
+  todos.forEach((newTodo) => {
+    addList(newTodo);
+  });
+}
+
 containerDiv.addEventListener("click", (e) => {
   // ! addtodo button event
   if (e.target.classList.contains("addTodo")) {
-    // const newTodo = inputTodo.value.trim();
-    let newTodo = inputTodo.value;
-
-    // const newTodo = `<p>${inputTodo.value}</p>`;
-    if (newTodo === "") {
+    if (!inputTodo.value) {
       showAlert("danger", "Please enter a todo");
     } else {
       showAlert("success", "Your todo successfully added !");
-      addList(newTodo);
-      addTodoToStorage(newTodo);
+      const newTodoObject = {
+        id: ID(),
+        isDone: false,
+        content: inputTodo.value,
+      };
+
+      todos.push(newTodoObject);
+
+      //?todos dizisinin son halini localStorage'e sakla
+      localStorage.setItem("todos", JSON.stringify(todos));
+      addList(newTodoObject);
+      inputTodo.value = "";
+
+      // !============================================
+
+      // addTodoToStorage(newTodo);
     }
     e.preventDefault();
     // ! remove all todos
+  } else if (e.target.classList.contains("fa-remove")) {
+    const id = e.target.closest("li").getAttribute("id");
+    // const id = e.target.closest("li").getAttribute("id");
+    //? Dizinin ilgili elementini sildi
+    todos = todos.filter((newTodo) => newTodo.id != id);
+
+    //?todos dizisinin son halini localStorage'e sakladık
+    localStorage.setItem("todos", JSON.stringify(todos));
+
+    //?DOM'daki ilgili li elementini sil
+    e.target.closest("li").remove();
+  } else if (e.target.classList.contains("fa-check")) {
+    const id = e.target.closest("li").getAttribute("id");
+    // console.log(e.target.parentElement);
+    // todos dizisindeki ilgili elementin isDone kismini güncelle
+    todos.map((newTodo, index) => {
+      if (newTodo.id == id) {
+        todos[index].isDone = !todos[index].isDone;
+      }
+    });
+
+    //?todos dizisinin son halini localStorage'e sakla
+    localStorage.setItem("todos", JSON.stringify(todos));
+    if (e.target.parentElement.classList.contains("checked")) {
+      e.target.parentElement.classList.remove("checked");
+      e.target.style.color = "red";
+    } else {
+      //? ilgili li elementinde checked adinda bir class yoksa ekle
+      e.target.parentElement.classList.add("checked");
+      console.log(e.target.parentElement);
+      e.target.style.color = "green";
+    }
+    // ! Bütün childları silme
   } else if (e.target.classList.contains("btn-danger")) {
     let ul = e.target.previousElementSibling.previousElementSibling;
     if (ul.childElementCount > 0) {
@@ -52,119 +93,22 @@ containerDiv.addEventListener("click", (e) => {
       showAlert("danger", "No Todos left to delete");
     }
     // ? ==================================
-  } else if (e.target.classList.contains("fa-remove")) {
-    if (e.target.closest("li").querySelector(".form-check-input").checked) {
-      e.target.parentElement.parentElement.remove();
-      deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
-      let content = e.target.parentElement.parentElement.textContent;
-      showAlert("success", `${content} removed`);
-    } else {
-      showAlert("danger", "Please complete the todo");
-    }
-  } else if (e.target.classList.contains("btn-warning")) {
-    search.value = "";
-    const listItems = document.querySelectorAll(".form-group-item");
-
-    listItems.forEach(function (listItem) {
-      listItem.setAttribute("style", "display : block");
-    });
-    e.preventDefault();
-  } else if (e.target.classList.contains("checkbox")) {
-    if (e.target.value === "false") {
-      e.target.value = "true";
-      e.target.parentElement.style = "text-decoration:line-through";
-      let content = e.target.parentElement.textContent;
-      showAlert("success", `${content} completed`);
-    } else {
-      e.target.value = "false";
-      e.target.parentElement.style = "text-decoration:none";
-    }
   }
 });
-
-// ! delete storage
-
-function deleteTodoFromStorage(deletetodo) {
-  let todos = getTodosFromStorage();
-
-  todos.forEach(function (todo, index) {
-    if (todo === deletetodo) {
-      todos.splice(index, 1); // Arrayden değeri silebiliriz.
-    }
-  });
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-// ! sayfa yüklendiğinde todaları ekleme
-
-function laodAllTodosToUI() {
-  let todos = getTodosFromStorage();
-
-  todos.forEach(function (todo) {
-    addList(todo);
-  });
-}
-
-//  ! todoları storage ekleme
-
-function getTodosFromStorage() {
-  let todos;
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } //
-  else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
-  return todos;
-}
-
-function addTodoToStorage(newTodo) {
-  let todos = getTodosFromStorage();
-  todos.push(newTodo);
-
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-// ! alerttttttt ================
-
-function showAlert(type, message) {
-  const alert = document.createElement("div");
-  alert.className = `alert alert-${type}`;
-  alert.textContent = message;
-  // console.log(alert);
-  firstCardBody.append(alert);
-  // * set timeout
-  setTimeout(function () {
-    alert.remove();
-  }, 1000);
-}
 
 // ! element oluşturma
 
 function addList(newTodo) {
-  const newElement = document.createElement("li");
-  const link = document.createElement("a");
-  const todoChecker = document.createElement("input");
-  // ! elementlere değer atama
-  newElement.className = "form-group-item d-flex justify-content-between";
-  // ! link Attribute
-  link.href = "#";
-  link.className = "delete-item";
-  link.innerHTML = "<i class = 'fa fa-remove '></i>";
-  // ! checkbox
-  todoChecker.className = "checkbox form-check-input";
-  todoChecker.type = "checkbox";
-  todoChecker.value = "false";
-  // ! combining
-
-  newElement.appendChild(todoChecker);
-  newElement.appendChild(document.createTextNode(newTodo));
-  newElement.id = ID();
-
-  newElement.appendChild(link);
-  todoList.appendChild(newElement);
-
-  inputTodo.value = "";
+  //? her bir todo objesini destructure yaptık
+  const { id, content, isDone } = newTodo;
+  todoList.innerHTML += `
+   <li class="form-group-item d-flex justify-content-between ${
+     isDone ? "checked" : ""
+   } " id=${id} >
+   <i class="fa-solid fa-check"></i>
+       <p>${content}</p>
+       <a href="#" class="delete-item"><i class="fa fa-remove "></i></a>
+     </li>`;
 }
 
 // ! filter todos
@@ -185,4 +129,18 @@ function filterTodos(e) {
 //  ! id function
 function ID() {
   return "_" + Math.random().toString(36).substr(2, 9);
+}
+
+// ! alerttttttt ================
+
+function showAlert(type, message) {
+  const alert = document.createElement("div");
+  alert.className = `alert alert-${type}`;
+  alert.textContent = message;
+  // console.log(alert);
+  firstCardBody.append(alert);
+  // * set timeout
+  setTimeout(function () {
+    alert.remove();
+  }, 1000);
 }
