@@ -45,15 +45,16 @@ containerDiv.addEventListener("click", (e) => {
     // ! remove all todos
   } else if (e.target.classList.contains("fa-remove")) {
     const id = e.target.closest("li").getAttribute("id");
-    // const id = e.target.closest("li").getAttribute("id");
     //? Dizinin ilgili elementini sildi
-    todos = todos.filter((newTodo) => newTodo.id != id);
-
-    //?todos dizisinin son halini localStorage'e sakladık
-    localStorage.setItem("todos", JSON.stringify(todos));
-
-    //?DOM'daki ilgili li elementini sil
-    e.target.closest("li").remove();
+    if (e.target.closest("li").classList.contains("checked")) {
+      todos = todos.filter((newTodo) => newTodo.id != id);
+      e.target.closest("li").remove();
+      let content = e.target.closest("li").textContent;
+      localStorage.setItem("todos", JSON.stringify(todos));
+      showAlert("success", `${content} removed`);
+    } else {
+      showAlert("danger", "Please complete the todo");
+    }
   } else if (e.target.classList.contains("fa-check")) {
     const id = e.target.closest("li").getAttribute("id");
     // console.log(e.target.parentElement);
@@ -67,13 +68,12 @@ containerDiv.addEventListener("click", (e) => {
     //?todos dizisinin son halini localStorage'e sakla
     localStorage.setItem("todos", JSON.stringify(todos));
     if (e.target.parentElement.classList.contains("checked")) {
+      console.log(e.target.parentElement.classList.contains("checked"));
+      console.log(e.target.parentElement);
       e.target.parentElement.classList.remove("checked");
-      e.target.style.color = "red";
     } else {
       //? ilgili li elementinde checked adinda bir class yoksa ekle
       e.target.parentElement.classList.add("checked");
-      console.log(e.target.parentElement);
-      e.target.style.color = "green";
     }
     // ! Bütün childları silme
   } else if (e.target.classList.contains("btn-danger")) {
