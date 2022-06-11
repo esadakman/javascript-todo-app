@@ -27,31 +27,47 @@
 
 }
 
-.fa {
+.fa-remove {
     /* border: 2px red solid; */
     color: red;
     font-size: 1.5rem;
     margin-right: 1rem;
 }
 
-.fa-remove:hover {
+.fa-remove:hover,
+.fa-solid:hover {
     transform: scale(1.3);
     transition: all .3s linear;
 }
 
-
 .form-group-item {
     position: relative;
+    height: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
 }
 
-.form-check-input {
+.fa-check {
     position: absolute;
     left: -30px;
     cursor: pointer;
     transition: all .3s linear;
     font-size: 1.3rem;
-    bottom: 13%;
+    color: #0B5ED7;
+}
 
+li>p {
+    margin-top: -.2rem;
+}
+
+li.checked>p {
+    color: rgb(36, 35, 35);
+    text-decoration: line-through;
+    font-weight: normal;
+}
+
+li.checked>.fa-check {
+    color: green
 }
 
 
