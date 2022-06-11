@@ -3,9 +3,7 @@ const todoList = document.querySelectorAll(".form-group")[1];
 const search = document.querySelector("#search");
 const firstCardBody = document.querySelectorAll(".card-body")[0];
 const containerDiv = document.querySelector(".container");
-const checkboxx = document.querySelector(".form-check-input");
 
-var checkboxes = document.querySelectorAll('input[type="checkbox"]');
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
 window.addEventListener("load", () => {
