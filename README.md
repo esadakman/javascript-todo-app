@@ -1,5 +1,4 @@
-# To-Do App
-
+# To-Do App 
 ## Objective
 
 Build a Todo app using JavaScript.
@@ -23,7 +22,5 @@ You can reach my To-Do app from [here](https://esadakman.github.io/todo_list_pro
 ### Preview of the Project
 
 ![todo-list](https://user-images.githubusercontent.com/98649983/171985802-28ac3d56-d77f-482e-9c48-a9e422c37b95.gif)
-
-
-
- <!-- <img  src="./todo.gif" alt="python" /> --> 
+ 
+ 

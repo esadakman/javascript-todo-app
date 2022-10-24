@@ -35,14 +35,16 @@ containerDiv.addEventListener("click", (e) => {
       //?todos dizisinin son halini localStorage'e sakla
       localStorage.setItem("todos", JSON.stringify(todos));
       addList(newTodoObject);
-      inputTodo.value = "";
+      inputTodo.value = "";  
+      // !============================================
 
+      // addTodoToStorage(newTodo);
     }
     e.preventDefault();
-// ! remove all todos
+    // ! remove all todos
   } else if (e.target.classList.contains("fa-remove")) {
     const id = e.target.closest("li").getAttribute("id");
-//? Dizinin ilgili elementini sildik
+    //? Dizinin ilgili elementini sildi 
     if (e.target.closest("li").classList.contains("checked")) {
       todos = todos.filter((newTodo) => newTodo.id != id);
       e.target.closest("li").remove();
@@ -53,15 +55,15 @@ containerDiv.addEventListener("click", (e) => {
       showAlert("danger", "Please complete the todo");
     }
   } else if (e.target.classList.contains("fa-check")) {
-    const id = e.target.closest("li").getAttribute("id");
+    const id = e.target.closest("li").getAttribute("id"); 
     // todos dizisindeki ilgili elementin isDone kismini güncelle
     todos.map((newTodo, index) => {
       if (newTodo.id == id) {
         todos[index].isDone = !todos[index].isDone;
       }
     });
-
-//?todos dizisinin son halini localStorage'e sakla
+ 
+//?todos dizisinin son halini localStorage'e sakla 
     localStorage.setItem("todos", JSON.stringify(todos));
     if (e.target.parentElement.classList.contains("checked")) {
       console.log(e.target.parentElement.classList.contains("checked"));
@@ -70,8 +72,8 @@ containerDiv.addEventListener("click", (e) => {
     } else {
       //? ilgili li elementinde checked adinda bir class yoksa ekle
       e.target.parentElement.classList.add("checked");
-    }
-// ! Bütün childları silme
+    } 
+    // ! Bütün childları silme 
   } else if (e.target.classList.contains("btn-danger")) {
     let ul = e.target.previousElementSibling.previousElementSibling;
     if (ul.childElementCount > 0) {
@@ -85,7 +87,7 @@ containerDiv.addEventListener("click", (e) => {
     } else {
       // alert("No Todos left to delete");
       showAlert("danger", "No Todos left to delete");
-    }
+    } 
   }
 });
 
