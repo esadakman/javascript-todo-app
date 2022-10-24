@@ -17,7 +17,7 @@ Build a Todo app using JavaScript.
 
 ## Project Link
 
-You can reach my To-Do app from [here](https://esadakman.github.io/todo_list_project/)
+You can reach my To-Do app from [here](https://esadakman.github.io/javascript-todo-app/)
 
 ### Preview of the Project
 
