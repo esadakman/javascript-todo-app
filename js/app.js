@@ -70,8 +70,8 @@ containerDiv.addEventListener("click", (e) => {
     //?todos dizisinin son halini localStorage'e sakla
     localStorage.setItem("todos", JSON.stringify(todos));
     if (e.target.parentElement.classList.contains("checked")) {
-      console.log(e.target.parentElement.classList.contains("checked"));
-      console.log(e.target.parentElement);
+      // console.log(e.target.parentElement.classList.contains("checked"));
+      // console.log(e.target.parentElement);
       e.target.parentElement.classList.remove("checked");
     } else {
       //? ilgili li elementinde checked adinda bir class yoksa ekle

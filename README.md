@@ -1,4 +1,4 @@
-# To-Do App 
+# Todo App 
 ## Objective
 
 Build a Todo app using JavaScript.
